@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze:*)",
+      "Bash(flutter test:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(flutter pub outdated:*)",
+      "Bash(flutter pub deps:*)",
+      "Bash(flutter --version)",
+      "Bash(flutter doctor:*)",
+      "Bash(dart format:*)",
+      "Bash(dart analyze:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)"
+    ],
+    "deny": [
+      "Read(./**/*.env)",
+      "Read(./**/key.properties)",
+      "Read(./**/*.jks)",
+      "Read(./**/*.keystore)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.p12)",
+      "Read(./**/*.p8)",
+      "Read(./**/*.cer)",
+      "Read(./**/google-services.json)",
+      "Read(./**/GoogleService-Info.plist)",
+      "Edit(./**/*.env)",
+      "Edit(./**/key.properties)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git commit --no-verify:*)",
+      "Bash(git push --no-verify:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|MultiEdit|Write|NotebookEdit|Grep|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/block_secrets.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

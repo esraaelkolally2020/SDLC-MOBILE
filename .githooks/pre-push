@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Checks the branch name, then format, analyze and tests before pushing.
+set -euo pipefail
+
+red() { printf '\033[31m%s\033[0m\n' "$1" >&2; }
+step() { printf '\033[36m▶ %s\033[0m\n' "$1"; }
+
+protected='^(master|main|develop)$'
+branch_pattern='^(feature|bugfix|hotfix|release|chore)/[a-z0-9._-]+$'
+
+# Each stdin line: <local ref> <local sha> <remote ref> <remote sha>
+while read -r _local_ref local_sha remote_ref _remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue  # branch deletion
+  target="${remote_ref#refs/heads/}"
+  if printf '%s' "$target" | grep -Eq "$protected"; then
+    red "pre-push: direct pushes to '$target' are blocked. Push a branch and open a PR."
+    exit 1
+  fi
+  if ! printf '%s' "$target" | grep -Eq "$branch_pattern"; then
+    red "pre-push: branch '$target' must match $branch_pattern"
+    red "e.g. feature/leave-balance, bugfix/login-crash, release/1.4.0"
+    exit 1
+  fi
+done
+
+step "dart format (check)"
+if ! dart format --output=none --set-exit-if-changed lib test >/dev/null; then
+  red "pre-push: files are not formatted. Run: dart format lib test"
+  dart format --output=none --set-exit-if-changed lib test 2>&1 | grep -i 'changed' >&2 || true
+  exit 1
+fi
+
+step "flutter analyze"
+flutter analyze --no-fatal-infos || { red "pre-push: fix the analyzer issues above."; exit 1; }
+
+if [ -d test ] && [ -n "$(find test -name '*_test.dart' -print -quit)" ]; then
+  step "flutter test"
+  flutter test || { red "pre-push: tests failed."; exit 1; }
+fi
+
+exit 0

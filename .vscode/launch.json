@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "dev",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--flavor", "dev", "--dart-define-from-file=api_end_points.env"]
+    },
+    {
+      "name": "stage",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--flavor", "stage", "--dart-define-from-file=api_end_points.env"]
+    },
+    {
+      "name": "prod",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--flavor", "prod", "--dart-define-from-file=api_end_points.env"]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Blocks commits that add secret files or secret-looking values.
+set -euo pipefail
+
+red() { printf '\033[31m%s\033[0m\n' "$1" >&2; }
+
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
+[ -z "$staged" ] && exit 0
+
+file_pattern='(\.env$|key\.properties$|\.jks$|\.keystore$|\.pem$|\.p12$|\.p8$|\.cer$|\.mobileprovision$|google-services\.json$|GoogleService-Info\.plist$|auth_readme)'
+bad_files="$(printf '%s\n' "$staged" | grep -Ei "$file_pattern" | grep -v '\.example$' || true)"
+if [ -n "$bad_files" ]; then
+  red "pre-commit: these files must not be committed (secrets):"
+  printf '  %s\n' $bad_files >&2
+  red "Unstage them with: git restore --staged <file>"
+  exit 1
+fi
+
+# Only added lines are scanned. Add '# secrets-ignore' to a line for a known
+# false positive.
+content_pattern='(AIza[0-9A-Za-z_-]{35}|-----BEGIN [A-Z ]*PRIVATE KEY-----|sk_live_[0-9A-Za-z]{10,}|xox[baprs]-[0-9A-Za-z-]{10,}|ghp_[0-9A-Za-z]{30,}|(password|passwd|secret|api_?key|client_secret)["'"'"' ]*[:=] *["'"'"'][^"'"'"' ]{4,})'
+hits="$(git diff --cached -U0 --no-color -- . ':(exclude)*.example' ':(exclude).githooks/*' \
+  | grep -E '^\+[^+]' | grep -Eiv 'secrets-ignore' | grep -Ei "$content_pattern" || true)"
+if [ -n "$hits" ]; then
+  red "pre-commit: possible secret in staged changes:"
+  printf '%s\n' "$hits" | cut -c1-160 >&2
+  red "Move it to api_end_points.env (git-ignored) and read it with String.fromEnvironment."
+  red "If this is a false positive, add '# secrets-ignore' to the line."
+  exit 1
+fi
+
+exit 0
