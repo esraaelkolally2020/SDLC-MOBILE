@@ -24,6 +24,11 @@ sedi() { if sed --version >/dev/null 2>&1; then sed -i "$@"; else sed -i '' "$@"
 echo "▶ Dart package: $old_pkg → $new_pkg"
 sedi "s/^name: $old_pkg$/name: $new_pkg/" pubspec.yaml
 grep -rl "package:$old_pkg/" lib test 2>/dev/null | while read -r f; do sedi "s#package:$old_pkg/#package:$new_pkg/#g" "$f"; done
+# Bundle ids and the project name also appear as string literals in lib/
+# (flavors.dart, the Sentry project name in main.dart).
+grep -rlE "$old_id|$old_ios_id|'$old_pkg'" lib 2>/dev/null | while read -r f; do
+  sedi -e "s/$old_id/$new_id/g" -e "s/$old_ios_id/$new_id/g" -e "s/'$old_pkg'/'$new_pkg'/g" "$f"
+done
 
 echo "▶ Android id: $old_id → $new_id"
 sedi "s/$old_id/$new_id/g" android/app/build.gradle.kts

@@ -13,8 +13,8 @@ class DevelopmentFlavor extends Flavor {
     ..title = 'Starter Dev'
     ..baseUrl = _baseUrl
     ..description = 'Development flavor'
-    ..androidBundleId = 'com.example.starter_app.dev'
-    ..iosBundleId = 'com.example.starterApp.dev'
+    ..androidBundleId = 'com.company.starter_app.dev'
+    ..iosBundleId = 'com.company.starterApp.dev'
     ..flavorType = FlavorsTypes.dev;
 }
 
@@ -26,8 +26,8 @@ class StageFlavor extends Flavor {
     ..title = 'Starter Stage'
     ..baseUrl = _baseUrl
     ..description = 'Stage flavor'
-    ..androidBundleId = 'com.example.starter_app.stage'
-    ..iosBundleId = 'com.example.starterApp.stage'
+    ..androidBundleId = 'com.company.starter_app.stage'
+    ..iosBundleId = 'com.company.starterApp.stage'
     ..flavorType = FlavorsTypes.stage;
 }
 
@@ -39,7 +39,7 @@ class ProductionFlavor extends Flavor {
     ..title = 'Starter'
     ..baseUrl = _baseUrl
     ..description = 'Production flavor'
-    ..androidBundleId = 'com.example.starter_app'
-    ..iosBundleId = 'com.example.starterApp'
+    ..androidBundleId = 'com.company.starter_app'
+    ..iosBundleId = 'com.company.starterApp'
     ..flavorType = FlavorsTypes.prod;
 }
