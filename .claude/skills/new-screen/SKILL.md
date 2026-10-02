@@ -11,7 +11,7 @@ argument-hint: <feature_name> <screen_name> [cubit to use]
    - `<screen>_mobile_body.dart`: the real layout, with `BlocBuilder<XCubit, BaseState>` and a `switch` on state
    - `<screen>_web_body.dart` / `<screen>_desktop_body.dart`: reuse the mobile body with wider parameters unless the design differs
    - Extra widgets go in `../widgets/`, one widget per file.
-2. Route: add `static const String <screen> = '/<feature>/<screen>';` to `app_router.dart`, and a `GoRoute` to `router_manager.dart`.
+2. Route: add `static const String <screen> = '/<feature>/<screen>';` to `app_router.dart`, and a `GoRoute` to `router_manager.dart` with `name:` and `path:` both set to the constant (as the example route does), so the route observer logs it.
    - If the screen needs data passed in, use `state.extra` with a typed cast, or path or query parameters for IDs. Never pass whole models through query strings.
    - Provide the cubit with `BlocProvider(create: (_) => XCubit(xUseCase: getIt()))`. To share a cubit that already exists, use `BlocProvider.value` and pass it via `extra`.
 3. Navigate with `context.push(AppRouter.<screen>)` / `context.go(...)`, never `Navigator.push` with a raw widget.

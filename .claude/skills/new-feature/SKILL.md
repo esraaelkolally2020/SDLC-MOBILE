@@ -85,6 +85,7 @@ Screens: copy `example_main_screen.dart`, `example_mobile_body.dart`, `example_w
 3. `lib/core/services/route_manager/router_manager.dart`: add a GoRoute:
    ```dart
    GoRoute(
+     name: AppRouter.feature, // the route observer logs this name
      path: AppRouter.feature,
      builder: (context, state) => BlocProvider(
        create: (_) => FeatureCubit(featureUseCase: getIt())..getFeatures(const FeatureRequestModel()),
