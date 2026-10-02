@@ -1,0 +1,45 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Format
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos
+      - name: Test
+        run: flutter test
+      - name: Web safety (no dart:io outside *_io.dart)
+        run: |
+          hits=$( { grep -rn "import 'dart:io'" lib; grep -rn "Platform\.is" lib; } | grep -v '_io.dart' || true)
+          if [ -n "$hits" ]; then echo "$hits"; exit 1; fi
+      - name: Translation key parity
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          en = json.load(open('assets/translations/en-US.json'))
+          ar = json.load(open('assets/translations/ar-SA.json'))
+          def keys(d, p=''):
+              out = set()
+              for k, v in d.items():
+                  out |= keys(v, p + k + '.') if isinstance(v, dict) else {p + k}
+              return out
+          a, b = keys(en), keys(ar)
+          if a != b:
+              print('only en:', sorted(a - b)); print('only ar:', sorted(b - a)); sys.exit(1)
+          PY
