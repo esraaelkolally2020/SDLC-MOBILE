@@ -19,7 +19,7 @@ flutter run --flavor dev --dart-define-from-file=api_end_points.env
 git add . && git commit -m "chore: bootstrap from starter template"
 ```
 Then:
-1. Replace the `@esraaelkolally2020` placeholders in `.github/CODEOWNERS` and turn on branch protection (require PR, one approval, CI green, code-owner review) on the base branch.
+1. Set the real owners in `.github/CODEOWNERS` (currently `@esraaelkolally2020`) and turn on branch protection (require PR, one approval, CI green, code-owner review) on the base branch.
 2. Decide the base branch (`develop` or `main`) and say so in `.claude/rules/git-workflow.md`.
 3. Remove or replace `lib/features/example/` once your first real feature exists. Keep it until then, because the Claude skills use it as their reference.
 
