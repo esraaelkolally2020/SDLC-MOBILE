@@ -85,7 +85,7 @@ A ticket may be picked up only when it has all of these. Missing items go back t
 
 ## Branches and merging
 - Names: `feature/`, `bugfix/`, `hotfix/`, `release/`, `chore/`. Enforced by `.githooks/pre-push`.
-- Base branch: `develop` when the team uses it, otherwise `main`. Pick one per project and keep [git-workflow.md](../.claude/rules/git-workflow.md) in line. Direct pushes to `master`, `main` and `develop` are blocked by the hook.
+- Base branch: `main`. Direct pushes to `master`, `main` and `develop` are blocked by the hook, so every change goes through a PR.
 - At least one LEAD approval. The PR author never merges their own PR without a second reviewer. `.github/CODEOWNERS` requests reviewers automatically.
 - Keep branches under about 3 working days or 400 changed lines. Split larger work into spec-agreed slices.
 

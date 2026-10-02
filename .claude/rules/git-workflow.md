@@ -5,7 +5,7 @@ paths:
 # Git workflow
 
 - Branches: `feature/<kebab-name>`, `bugfix/…`, `hotfix/…`, `release/<x.y.z>`, `chore/…`. Pushing to `master`/`main`/`develop` is blocked. Changes go through PRs.
-- Base branch: `develop` if the project has one, otherwise `main`. PRs target it. Hotfixes branch from the last release tag. Approval gates and who signs off are in `docs/WORKFLOW.md`.
+- Base branch: `main`. PRs target it; hotfixes branch from the last release tag. Approval gates and who signs off are in `docs/WORKFLOW.md`.
 - Commits use Conventional Commits, enforced by `.githooks/commit-msg`:
   `feat(login): add OTP resend timer` · `fix(network): handle 502 as server error` · `refactor(example): extract card widget`.
   Types: feat, fix, refactor, perf, test, docs, build, ci, chore, revert, style. Header ≤ 72 chars, imperative mood, no trailing period.

@@ -7,7 +7,7 @@ description: VERIFY stage. Runs the full local quality gate on the current branc
 
 Run every step, even if an earlier one fails. Report a checklist at the end.
 
-1. **Scope**: `git diff --name-only $(git merge-base HEAD origin/develop 2>/dev/null || git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD origin/master)...HEAD` plus uncommitted changes. Review only these files for steps 6–7.
+1. **Scope**: `git diff --name-only $(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD origin/master)...HEAD` plus uncommitted changes. Review only these files for steps 6–7.
 2. **Format**: `dart format --output=none --set-exit-if-changed lib test`. If it fails, run `dart format lib test` and say so.
 3. **Analyze**: `flutter analyze`. There must be 0 errors and 0 warnings. List the infos introduced by this branch.
 4. **Tests**: `flutter test`.

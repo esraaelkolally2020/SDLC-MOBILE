@@ -20,7 +20,7 @@ git add . && git commit -m "chore: bootstrap from starter template"
 ```
 Then:
 1. Set the real owners in `.github/CODEOWNERS` (currently `@esraaelkolally2020`) and turn on branch protection (require PR, one approval, CI green, code-owner review) on the base branch.
-2. Decide the base branch (`develop` or `main`) and say so in `.claude/rules/git-workflow.md`.
+2. The base branch is `main` (see `.claude/rules/git-workflow.md`). Make it the default branch on GitHub.
 3. Remove or replace `lib/features/example/` once your first real feature exists. Keep it until then, because the Claude skills use it as their reference.
 
 ## Daily commands

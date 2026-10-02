@@ -7,7 +7,7 @@ argument-hint: [ticket id]
 # PR description
 
 ## Steps
-1. Gather: `git log <base>..HEAD --pretty=format:'%s'`, `git diff --stat <base>...HEAD`, the spec at `docs/specs/<feature>.md` if present, and any `/pre-pr-check` or reviewer output from this session. `<base>` is `origin/develop` if it exists, else `origin/main`, else `origin/master`.
+1. Gather: `git log <base>..HEAD --pretty=format:'%s'`, `git diff --stat <base>...HEAD`, the spec at `docs/specs/<feature>.md` if present, and any `/pre-pr-check` or reviewer output from this session. `<base>` is `origin/main`.
 2. Read `.github/pull_request_template.md` and fill every section. Do not invent test results: only report what was actually run in this session, and mark anything else as "not run".
 3. Title: Conventional Commit style, ≤ 72 chars, e.g. `feat(leave-balance): show balance per leave type`.
 4. Fill:
