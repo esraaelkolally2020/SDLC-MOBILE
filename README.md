@@ -6,7 +6,8 @@ The team's starting point for new Flutter apps (Android, iOS, web). It contains:
 - git hooks, CI, and PR/issue templates that enforce the same rules for humans and Claude
 - a documented approval cycle with the backend, design and business teams
 
-**Mobile lead: start with [docs/WORKFLOW.md](docs/WORKFLOW.md).** It is the single checklist for any work item.
+**Mobile lead: start with [docs/WORKFLOW.md](docs/WORKFLOW.md)** (the checklist for any work item) and [docs/WORKFLOW_DIAGRAM.md](docs/WORKFLOW_DIAGRAM.md) (the same process as diagrams).
+Every main folder has its own README that describes each file in it: [.claude](.claude/README.md), [.githooks](.githooks/README.md), [.github](.github/README.md), [docs](docs/README.md), [lib](lib/README.md), [lib/core](lib/core/README.md), [lib/features](lib/features/README.md), [test](test/README.md), [assets](assets/README.md), [tool](tool/README.md).
 
 ## Start a new project
 ```bash
@@ -98,6 +99,8 @@ Full detail, roles and checklists: [docs/WORKFLOW.md](docs/WORKFLOW.md). Backend
 | Path | Purpose | Audience |
 |---|---|---|
 | `docs/WORKFLOW.md` | Roles, gates G0 to G7, Definition of Ready/Done, bug, hotfix and release paths | Everyone, lead first |
+| `docs/WORKFLOW_DIAGRAM.md` | Diagrams of the process, who does what, guards, and a stage-by-stage file reference | Everyone |
+| `docs/README.md` | Index of the docs folder and reading order | New joiners |
 | `docs/INTEGRATION.md` | Backend contract, design handoff, business acceptance tracks | Lead, DEV, BE, DES, PO |
 | `docs/SDLC.md` | How Claude Code is used per stage, and what runs automatically | Developers |
 | `docs/ARCHITECTURE.md` | Layers, DI, routing, network layer, state, flavors, web | Developers |
