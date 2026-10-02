@@ -11,7 +11,7 @@ argument-hint: <ticket text | steps to reproduce | stack trace>
 2. **Understand**: collect expected vs actual, app version, flavor, platform and OS, and logs (never paste tokens or PII). For a stack trace from an obfuscated release, ask for the symbolicated trace. Ask one batch of questions if the steps are incomplete.
 3. **Locate**: find the layer that owns the fault using `.claude/rules/architecture.md`. Check if the cause is the API response instead of the app. If so, stop and write a backend question (see `docs/INTEGRATION.md`), because the app must not hide a contract bug.
 4. **Reproduce in a test**: add a failing test under `test/` (cubit, model, or use case). If it cannot be unit-tested, write the manual steps for QA.
-5. **Fix** the root cause with the smallest change. No drive-by refactors or formatting changes in the same commit.
+5. **Fix** the root cause with the smallest change. Do not edit existing tests or weaken assertions to make them pass; the only test change allowed is adding the new regression test. If an existing test is wrong, stop and tell the user why. No drive-by refactors or formatting changes in the same commit.
 6. **Verify**: the new test passes, then `/pre-pr-check`.
 7. **Report** for the PR:
 

@@ -8,11 +8,12 @@ This README is the only one in `.claude/`: Claude Code scans `rules/`, `skills/`
 Project permissions and hooks.
 - **allow**: `flutter analyze/test/pub get/doctor`, `dart format/analyze`, read-only git (`status`, `diff`, `log`, `branch`, `show`) run without prompts.
 - **deny**: reading or editing env files, `key.properties`, keystores, certificates and Firebase configs; `git push --force`; `--no-verify` on commit and push.
-- **hooks**: runs `hooks/block_secrets.sh` before every Read, Edit, Write, Grep and Bash call.
+- **hooks**: runs `hooks/block_secrets.sh` before every Read, Edit, Write, Grep and Bash call, and `hooks/format_dart.sh` after every edit.
 
 ## hooks/
 | File | What it does |
 |---|---|
+| `format_dart.sh` | PostToolUse hook. Runs `dart format` on a Dart file right after Claude edits it. Never blocks |
 | `block_secrets.sh` | PreToolUse guard. Reads the tool call, extracts the target path or command, and exits with code 2 (block) if it names a secret file (`.env`, `key.properties`, `.jks`, `.keystore`, `.pem`, `.p12`, `.p8`, `.cer`, `google-services.json`, `GoogleService-Info.plist`). `*.env.example` and `--dart-define-from-file=...` are allowed. If it blocks a harmless command, change the wording or fix the pattern in this file |
 
 ## rules/
@@ -35,6 +36,7 @@ Run with `/name`. Each folder contains one `SKILL.md` (the instructions Claude f
 
 | Skill | Stage | What it does |
 |---|---|---|
+| `new-intent` | Plan | Turns an idea or incident into `docs/intent/<name>.md` for product owner approval |
 | `api-contract-check` | Plan | Reviews a Swagger or sample JSON against the network layer; outputs gaps, questions for BE and a contract status |
 | `design-handoff` | Plan | Turns designs into a component map, token decisions, asset list, missing-state questions and accessibility flags |
 | `feature-spec` | Plan | Writes `docs/specs/<feature>.md` from `docs/specs/_template.md`; code starts only when it is approved |
