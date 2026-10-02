@@ -12,7 +12,8 @@ Write a short, concrete spec that `/new-feature` can implement without guessing.
 1. Collect inputs: the user's description, any pasted ticket, Swagger or JSON samples, and designs. If endpoint paths, request/response shapes or the screen list are missing, **ask** (one batch of questions). Don't invent API fields.
 2. Read `lib/features/example/` and `.claude/rules/architecture.md` so the spec uses the real folder and class names.
 3. Check `lib/core/component/` and other features for anything reusable, and list it.
-4. Write `docs/specs/<feature_name>.md` with this template:
+3b. If the user has a Swagger/sample or design, run `/api-contract-check` and `/design-handoff` first and use their output for the API and Design sections.
+4. Copy `docs/specs/_template.md` to `docs/specs/<feature_name>.md` and fill it (it adds Approvals, Contract status, Design, Test plan and Open questions to the outline below). Keep `Status: draft` until the approvers in `docs/WORKFLOW.md` (G1) sign off. The outline:
 
 ```markdown
 # <Feature title>
@@ -53,4 +54,4 @@ Existing components or services used.
 ## Out of scope
 ```
 
-5. Show the user the spec path and a 3-line summary, plus any open questions. Implementation starts only after the user approves; next step is `/new-feature <feature_name>`.
+5. Show the user the spec path and a 3-line summary, plus any open questions. Implementation starts only after the spec is approved (Status: approved, G1 in `docs/WORKFLOW.md`: lead, PO, backend, designer). Suggest committing it as `docs(<feature>): add spec` and opening a draft PR for the approvals. Next step is `/new-feature <feature_name>`.
