@@ -6,7 +6,7 @@ Visual version of [WORKFLOW.md](WORKFLOW.md). The diagrams are Mermaid, so GitHu
 
 ```mermaid
 flowchart TD
-    A["Idea / ticket<br/>(.github/ISSUE_TEMPLATE/feature_request.md)"] --> G0
+    A["Idea / ticket<br/>/new-intent → docs/intent/name.md<br/>(PO approves)"] --> G0
     G0{{"G0 READY<br/>PO + DES + BE approve<br/>Definition of Ready"}}
     G0 -->|"missing criteria, design or contract"| A
     G0 --> P1["/api-contract-check<br/>questions for BE"]

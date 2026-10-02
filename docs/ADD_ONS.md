@@ -12,7 +12,6 @@ Each add-on below lists the package, the init snippet and the files involved.
   FirebaseMessaging.onBackgroundMessage(backgroundMessageHandler); // top-level function
   ```
 - Put notification code in `lib/core/services/notifications/` as a singleton service. Push token registration goes after login.
-- Business One reference: `lib/core/services/notifications/`, `lib/core/services/firebase/firebase_firestore_error.dart` (Firestore error logger, prod only).
 
 ## Maps and location
 - Packages: `google_maps_flutter`, `geolocator`, `geocoding`, `detect_fake_location` (Android)
@@ -22,14 +21,12 @@ Each add-on below lists the package, the init snippet and the files involved.
 ## Device security
 - `flutter_security_checker` (root/jailbreak), a VPN/proxy checker, and `local_auth` (biometrics)
 - Run the check in `AppServices.init()` for the prod flavor only, and show a blocked screen.
-- Business One reference: `lib/core/services/security_handler/`, `lib/core/services/vpn/`, `lib/core/services/biometric_auth_service/`.
 
 ## In-app update and store checks
 - `in_app_update` (Android), `upgrader` (both)
-- Business One reference: `lib/core/services/app_store/app_store_handler.dart`.
 
 ## Network inspector (dev tooling)
-- `api_inspector` (internal git package): add `InspectorInterceptor` in `DioNetworkClient`, only when the flavor is not prod.
+- A network-inspector package (for example `api_inspector`, or your team's internal one): add `InspectorInterceptor` in `DioNetworkClient`, only when the flavor is not prod.
 
 ## Device info
 - `device_info_plus`, `package_info_plus`, `android_id`: wrap them in `lib/core/services/device/` and guard web.
