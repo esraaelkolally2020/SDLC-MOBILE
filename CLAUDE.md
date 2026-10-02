@@ -7,7 +7,7 @@ Clean Architecture with feature folders, Cubit state, get_it DI, go_router, and 
 - Setup once: `tool/setup.sh` (git hooks, local env file, pub get)
 - Run: `flutter run --flavor dev --dart-define-from-file=api_end_points.env`
 - Web: `flutter run -d chrome --dart-define-from-file=api_end_points.env` (no `--flavor` on web)
-- Check: `dart format lib test` · `flutter analyze` · `flutter test`
+- Check: `dart format lib test` · `flutter analyze` · `flutter test`. Run all three before you say a task is done; analyze must report no issues and tests must pass. Healthy output: `No issues found!` and `All tests passed!`.
 - Flavors: `dev`, `stage`, `prod`. The flavor is read from `FLUTTER_APP_FLAVOR`, which `--flavor` sets.
 
 ## Layout
@@ -36,6 +36,10 @@ architecture · state-management · networking · ui-components · localization 
 Gates, approvers and the integration with backend, design and business are in `docs/WORKFLOW.md` and `docs/INTEGRATION.md`. Tooling is in `docs/SDLC.md`:
 `/api-contract-check` + `/design-handoff` → `/feature-spec` (approved before code) → `/new-feature` (`/new-endpoint`, `/new-screen`, `/add-translation`, `/web-safe-platform`, `/add-tests`; `/fix-bug` for bugs) → `/pre-pr-check` → `flutter-reviewer`, `design-reviewer`, `security-auditor` agents → `/pr-description` → `/release`.
 Do not start building a feature whose spec is not `Status: approved`. Never invent API fields or design tokens; ask.
+
+## Review
+Review policy is in `REVIEW.md`. You never approve your own code. When the same review finding appears twice, propose a line for this file or a rule.
+Stage overview: `docs/PLAYBOOK.md`. For non-trivial work, write `docs/plans/<feature>.md` in plan mode before coding.
 
 ## Never
 - Read, print or edit `*.env`, `key.properties`, keystores or certificates. A hook blocks this. Use `api_end_points.env.example`.
