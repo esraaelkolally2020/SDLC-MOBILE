@@ -3,12 +3,14 @@
 Every stage has a skill or agent, so Claude follows the same steps and conventions for everyone.
 Skills are run with `/name`. Agents are started by asking Claude, e.g. "run the flutter-reviewer agent".
 
+The approval gates (who signs off at each stage) and the backend, design and business tracks are in [WORKFLOW.md](WORKFLOW.md) and [INTEGRATION.md](INTEGRATION.md). This page covers the tools.
+
 | Stage | Use | Output |
 |---|---|---|
-| 1. Plan | `/feature-spec <feature>` (use plan mode for big or unclear work) | `docs/specs/<feature>.md` approved by the dev and the lead |
-| 2. Build | `/new-feature`, `/new-endpoint`, `/new-screen`, `/add-translation`, `/web-safe-platform` | Code in the standard layout, wired into DI and routes |
-| 3. Verify | `/pre-pr-check` | Format, analyze, tests, web-safety, translations, secrets checklist |
-| 4. Review | `flutter-reviewer` agent; `security-auditor` agent when auth, storage, network, logging or build config changed | Findings by severity, with file:line |
+| 1. Plan | `/api-contract-check` (backend), `/design-handoff` (design), then `/feature-spec <feature>` (use plan mode for big or unclear work) | `docs/specs/<feature>.md` approved by lead, PO, backend and designer |
+| 2. Build | `/new-feature`, `/new-endpoint`, `/new-screen`, `/add-translation`, `/web-safe-platform`, `/add-tests`; `/fix-bug` on bugfix/hotfix branches | Code and tests in the standard layout, wired into DI and routes |
+| 3. Verify | `/pre-pr-check` (and CI, `.github/workflows/ci.yml`) | Format, analyze, tests, web-safety, translations, secrets, spec/tests checklist |
+| 4. Review | `flutter-reviewer` agent; `design-reviewer` agent for UI; `security-auditor` agent when auth, storage, network, logging or build config changed; `/pr-description` | Findings by severity with file:line, and a PR body from the template |
 | 5. Ship | `/release <bump> <flavor>` | Version bump, changelog, tag, build commands, Sentry symbols |
 
 ## What runs automatically
@@ -26,11 +28,14 @@ Git hooks are enabled by `tool/setup.sh` (`git config core.hooksPath .githooks`)
 ## A typical feature
 ```text
 git switch -c feature/leave-balance
-/feature-spec leave_balance          ← paste the ticket and the API sample; review the spec
+/api-contract-check <swagger>        ← questions for backend
+/design-handoff <figma/screens>      ← questions for the designer
+/feature-spec leave_balance          ← paste the ticket and the answers; get the spec approved (G1)
 /new-feature leave_balance           ← scaffolds and wires everything
-(iterate: /new-endpoint, /new-screen, manual UI polish)
+(iterate: /new-endpoint, /new-screen, /add-tests, manual UI polish)
 /pre-pr-check
-"run flutter-reviewer"               ← fix the must-fix findings
+"run flutter-reviewer", "run design-reviewer"   ← fix the must-fix findings
+/pr-description
 git commit -m "feat(leave-balance): show balance per leave type"
 git push -u origin feature/leave-balance   ← pre-push runs the checks
 ```
@@ -48,3 +53,6 @@ git push -u origin feature/leave-balance   ← pre-push runs the checks
 | A scaffold template | `.claude/skills/<skill>/SKILL.md` + `lib/features/example/` (keep them in sync) |
 | Blocked secret patterns | `.claude/hooks/block_secrets.sh`, `.githooks/pre-commit`, `.gitignore`, `settings.json` deny list |
 | Commit or branch format | `.githooks/commit-msg`, `.githooks/pre-push`, `.claude/rules/git-workflow.md` |
+| Approval gates, roles, Definition of Ready/Done | `docs/WORKFLOW.md`, `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/`, `.github/CODEOWNERS` |
+| CI checks | `.github/workflows/ci.yml` (keep it in line with `/pre-pr-check`) |
+| Spec format | `docs/specs/_template.md` and `.claude/skills/feature-spec/SKILL.md` |

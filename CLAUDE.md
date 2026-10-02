@@ -30,10 +30,12 @@ assets/translations/{en-US,ar-SA}.json
 
 ## Rules
 Path-scoped rules in `.claude/rules/` load automatically:
-architecture · state-management · networking · ui-components · localization · platform-web · security · git-workflow.
+architecture · state-management · networking · ui-components · localization · platform-web · security · testing · git-workflow.
 
 ## Workflow
-Follow `docs/SDLC.md`: `/feature-spec` → `/new-feature` (`/new-endpoint`, `/new-screen`, `/add-translation`, `/web-safe-platform`) → `/pre-pr-check` → `flutter-reviewer` and `security-auditor` agents → `/release`.
+Gates, approvers and the integration with backend, design and business are in `docs/WORKFLOW.md` and `docs/INTEGRATION.md`. Tooling is in `docs/SDLC.md`:
+`/api-contract-check` + `/design-handoff` → `/feature-spec` (approved before code) → `/new-feature` (`/new-endpoint`, `/new-screen`, `/add-translation`, `/web-safe-platform`, `/add-tests`; `/fix-bug` for bugs) → `/pre-pr-check` → `flutter-reviewer`, `design-reviewer`, `security-auditor` agents → `/pr-description` → `/release`.
+Do not start building a feature whose spec is not `Status: approved`. Never invent API fields or design tokens; ask.
 
 ## Never
 - Read, print or edit `*.env`, `key.properties`, keystores or certificates. A hook blocks this. Use `api_end_points.env.example`.
