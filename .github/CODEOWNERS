@@ -1,10 +1,10 @@
-# Replace the placeholders with real GitHub teams or users, then enable
-# "Require review from Code Owners" in branch protection.
-*                     @your-org/MobileDev
-/.claude/             @your-org/MobileDev
-/.githooks/           @your-org/MobileDev
-/.github/             @your-org/MobileDev
-/docs/                @your-org/MobileDev
-/android/             @your-org/MobileDev
-/ios/                 @your-org/MobileDev
-/assets/translations/ @your-org/MobileDev
+# Code owners are auto-requested as reviewers. Enable "Require review from
+# Code Owners" in branch protection. Users need write access to the repo.
+*                     @esraaelkolally2020
+/.claude/             @esraaelkolally2020
+/.githooks/           @esraaelkolally2020
+/.github/             @esraaelkolally2020
+/docs/                @esraaelkolally2020
+/android/             @esraaelkolally2020
+/ios/                 @esraaelkolally2020
+/assets/translations/ @esraaelkolally2020
